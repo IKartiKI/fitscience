@@ -14,7 +14,7 @@ EMBED_FIELDS = {"studies": "summary", "claims": "text", "exercises": "name"}
 def load_seed_data(db, data: dict):
     """Insert all nodes (with embeddings) and edges. Idempotent via overwrite."""
     for coll_name in ["muscle_groups", "exercises", "claims", "studies"]:
-        docs = data[coll_name]
+        docs = [dict(d) for d in data[coll_name]]
         embed_field = EMBED_FIELDS.get(coll_name)
         if embed_field:
             vectors = embed_texts([d[embed_field] for d in docs])

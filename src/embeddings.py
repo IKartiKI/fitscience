@@ -10,6 +10,7 @@ _embedder = None
 
 
 def _get_embedder():
+    """Return the singleton embedder, creating it on first call."""
     global _embedder
     if _embedder is None:
         _embedder = GoogleGenerativeAIEmbeddings(model=EMBED_MODEL)

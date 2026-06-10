@@ -12,6 +12,7 @@ EDGE_COLLECTIONS = ["supports", "contradicts", "cites", "applies_to", "targets",
 
 def get_db():
     """Connect to the fitscience database using credentials from .env."""
+    # Required in .env: ARANGO_URL, ARANGO_USER, ARANGO_PASSWORD. ARANGO_DB defaults to "fitscience".
     client = ArangoClient(hosts=os.environ["ARANGO_URL"])
     return client.db(
         os.environ.get("ARANGO_DB", "fitscience"),
