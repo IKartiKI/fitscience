@@ -83,7 +83,8 @@ def ingest_paper(pdf_path: str, paper_key: str, db=None, llm=None) -> dict:
                 overwrite=True,
             )
             db.collection("supports").insert(
-                {"_from": study_id, "_to": f"claims/{claim_key}"}, overwrite=True, overwrite_mode="ignore",
+                {"_key": f"{paper_key}__{claim_key}"[:254], "_from": study_id, "_to": f"claims/{claim_key}"},
+                overwrite=True,
             )
             new_claims += 1
 
@@ -96,10 +97,11 @@ def ingest_paper(pdf_path: str, paper_key: str, db=None, llm=None) -> dict:
             overwrite=True,
         )
         db.collection("has_chunk").insert(
-            {"_from": study_id, "_to": f"chunks/{chunk_key}"}, overwrite=True, overwrite_mode="ignore",
+            {"_key": f"{paper_key}__{chunk_key}"[:254], "_from": study_id, "_to": f"chunks/{chunk_key}"},
+            overwrite=True,
         )
 
-    return {"study": study_id, "title": title, "claims": new_claims, "chunks": len(chunks)}
+    return {"study": study_id, "title": title or paper_key, "claims": new_claims, "chunks": len(chunks)}
 
 
 if __name__ == "__main__":

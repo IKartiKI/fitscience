@@ -47,7 +47,7 @@ def make_agent(db=None, llm=None):
     def hybrid_node(state: AgentState) -> dict:
         qvec = embed_query(state["query"])
         return {
-            "vector_results": vector_search(db, state["query"]),
+            "vector_results": vector_search(db, state["query"], qvec=qvec),
             "graph_results": graph_search(db, state["query"], qvec),
         }
 

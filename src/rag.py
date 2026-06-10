@@ -24,9 +24,9 @@ def get_llm():
     return ChatGoogleGenerativeAI(model=LLM_MODEL, temperature=0)
 
 
-def vector_search(db, query: str, collections=("studies", "claims", "chunks"), top_k=3) -> list[dict]:
+def vector_search(db, query: str, collections=("studies", "claims", "chunks"), top_k=3, qvec=None) -> list[dict]:
     """Search each collection by cosine similarity, return all hits sorted by score."""
-    qvec = embed_query(query)
+    qvec = qvec if qvec is not None else embed_query(query)
     hits = []
     for coll in collections:
         cursor = db.aql.execute(
