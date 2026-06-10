@@ -426,6 +426,7 @@ You do NOT need to scrape or parse real PDFs. You will create ~15-20 curated JSO
 ```
 python >= 3.10
 langchain
+langchain-text-splitters
 langchain-google-genai
 langgraph
 python-arango          # ArangoDB Python driver

@@ -54,6 +54,7 @@ notebooks/.ipynb_checkpoints/
 
 ```
 langchain
+langchain-text-splitters
 langchain-google-genai
 langgraph
 python-arango
