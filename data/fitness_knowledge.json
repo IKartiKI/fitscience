@@ -1,0 +1,89 @@
+{
+  "muscle_groups": [
+    {"_key": "chest", "name": "Chest (Pectoralis Major)", "function": "horizontal adduction, shoulder flexion"},
+    {"_key": "back", "name": "Back (Lats, Traps, Rhomboids)", "function": "pulling, scapular retraction"},
+    {"_key": "quads", "name": "Quadriceps", "function": "knee extension"},
+    {"_key": "hamstrings", "name": "Hamstrings", "function": "knee flexion, hip extension"},
+    {"_key": "glutes", "name": "Glutes", "function": "hip extension, abduction"},
+    {"_key": "shoulders", "name": "Shoulders (Deltoids)", "function": "shoulder abduction, flexion, rotation"},
+    {"_key": "biceps", "name": "Biceps", "function": "elbow flexion, supination"},
+    {"_key": "triceps", "name": "Triceps", "function": "elbow extension"}
+  ],
+  "exercises": [
+    {"_key": "bench_press", "name": "Barbell Bench Press", "category": "compound", "movement_pattern": "horizontal_push"},
+    {"_key": "squat", "name": "Barbell Back Squat", "category": "compound", "movement_pattern": "squat"},
+    {"_key": "deadlift", "name": "Conventional Deadlift", "category": "compound", "movement_pattern": "hip_hinge"},
+    {"_key": "pull_up", "name": "Pull-Up", "category": "compound", "movement_pattern": "vertical_pull"},
+    {"_key": "barbell_row", "name": "Barbell Row", "category": "compound", "movement_pattern": "horizontal_pull"},
+    {"_key": "overhead_press", "name": "Overhead Press", "category": "compound", "movement_pattern": "vertical_push"},
+    {"_key": "dumbbell_fly", "name": "Dumbbell Fly", "category": "isolation", "movement_pattern": "horizontal_adduction"},
+    {"_key": "leg_press", "name": "Leg Press", "category": "compound", "movement_pattern": "squat"},
+    {"_key": "romanian_deadlift", "name": "Romanian Deadlift", "category": "compound", "movement_pattern": "hip_hinge"},
+    {"_key": "hip_thrust", "name": "Barbell Hip Thrust", "category": "compound", "movement_pattern": "hip_extension"}
+  ],
+  "claims": [
+    {"_key": "volume_dose_response", "text": "There is a dose-response relationship between weekly training volume and hypertrophy: 10-20 hard sets per muscle per week produces more growth than fewer sets.", "confidence": "high"},
+    {"_key": "rep_range_wide", "text": "Rep ranges from roughly 6 to 30 reps per set are similarly effective for hypertrophy when sets are taken close to failure.", "confidence": "high"},
+    {"_key": "frequency_2x", "text": "Training a muscle group at least twice per week produces greater hypertrophy than training it once per week when volume is equated per session.", "confidence": "moderate"},
+    {"_key": "progressive_overload", "text": "Progressive overload (gradually increasing load, reps, or sets over time) is the primary driver of long-term muscle growth.", "confidence": "high"},
+    {"_key": "protein_intake", "text": "A daily protein intake of 1.6-2.2 g per kg of bodyweight is sufficient to maximize muscle protein synthesis for most lifters.", "confidence": "high"},
+    {"_key": "failure_proximity", "text": "Training close to failure (0-3 reps in reserve) is more important for hypertrophy than the specific load used.", "confidence": "moderate"}
+  ],
+  "studies": [
+    {"_key": "schoenfeld_2017", "title": "Dose-response relationship between weekly resistance training volume and increases in muscle mass: A systematic review and meta-analysis", "authors": ["Brad Schoenfeld", "Dan Ogborn", "James Krieger"], "year": 2017, "journal": "Journal of Sports Sciences", "summary": "Meta-analysis of 15 studies showing higher weekly set volumes produce greater hypertrophy, with 10+ sets per muscle per week outperforming lower volumes in a graded dose-response manner."},
+    {"_key": "krieger_2010", "title": "Single vs. multiple sets of resistance exercise for muscle hypertrophy: a meta-analysis", "authors": ["James Krieger"], "year": 2010, "journal": "Journal of Strength and Conditioning Research", "summary": "Meta-analysis finding multiple sets per exercise produce 40% greater hypertrophy than single sets, supporting higher training volumes."},
+    {"_key": "helms_2014", "title": "Recommendations for natural bodybuilding contest preparation: resistance and cardiovascular training", "authors": ["Eric Helms", "Peter Fitschen", "Alan Aragon"], "year": 2014, "journal": "Journal of Sports Medicine and Physical Fitness", "summary": "Review concluding that a wide range of rep ranges builds muscle effectively in natural athletes, recommending the majority of training in the 6-12 rep range with some work above and below."},
+    {"_key": "schoenfeld_2016", "title": "Effects of resistance training frequency on measures of muscle hypertrophy: A systematic review and meta-analysis", "authors": ["Brad Schoenfeld", "Dan Ogborn", "James Krieger"], "year": 2016, "journal": "Sports Medicine", "summary": "Meta-analysis showing training muscle groups twice per week produces superior hypertrophy compared to once per week."},
+    {"_key": "morton_2016", "title": "Neither load nor systemic hormones determine resistance training-mediated hypertrophy or strength gains in resistance-trained young men", "authors": ["Robert Morton", "Sara Oikawa", "Stuart Phillips"], "year": 2016, "journal": "Journal of Applied Physiology", "summary": "RCT showing high-rep light loads and low-rep heavy loads taken to failure produce equivalent hypertrophy, and that post-exercise hormone spikes do not predict growth."},
+    {"_key": "ralston_2017", "title": "The effect of weekly set volume on strength gain: a meta-analysis", "authors": ["Grant Ralston", "Lon Kilgore", "Frank Wyatt"], "year": 2017, "journal": "Sports Medicine", "summary": "Meta-analysis finding only small differences between low, medium, and high weekly set volumes for strength outcomes, suggesting diminishing returns from very high volumes."}
+  ],
+  "edges": {
+    "supports": [
+      ["studies/schoenfeld_2017", "claims/volume_dose_response"],
+      ["studies/krieger_2010", "claims/volume_dose_response"],
+      ["studies/helms_2014", "claims/rep_range_wide"],
+      ["studies/morton_2016", "claims/rep_range_wide"],
+      ["studies/morton_2016", "claims/failure_proximity"],
+      ["studies/schoenfeld_2016", "claims/frequency_2x"],
+      ["studies/helms_2014", "claims/protein_intake"]
+    ],
+    "contradicts": [
+      ["studies/ralston_2017", "claims/volume_dose_response"]
+    ],
+    "cites": [
+      ["studies/schoenfeld_2017", "studies/krieger_2010"]
+    ],
+    "applies_to": [
+      ["claims/rep_range_wide", "exercises/bench_press"],
+      ["claims/rep_range_wide", "exercises/squat"],
+      ["claims/rep_range_wide", "exercises/leg_press"],
+      ["claims/volume_dose_response", "exercises/bench_press"],
+      ["claims/volume_dose_response", "exercises/squat"],
+      ["claims/frequency_2x", "exercises/bench_press"],
+      ["claims/progressive_overload", "exercises/deadlift"],
+      ["claims/progressive_overload", "exercises/overhead_press"]
+    ],
+    "targets": [
+      ["exercises/bench_press", "muscle_groups/chest"],
+      ["exercises/bench_press", "muscle_groups/triceps"],
+      ["exercises/bench_press", "muscle_groups/shoulders"],
+      ["exercises/squat", "muscle_groups/quads"],
+      ["exercises/squat", "muscle_groups/glutes"],
+      ["exercises/deadlift", "muscle_groups/hamstrings"],
+      ["exercises/deadlift", "muscle_groups/glutes"],
+      ["exercises/deadlift", "muscle_groups/back"],
+      ["exercises/pull_up", "muscle_groups/back"],
+      ["exercises/pull_up", "muscle_groups/biceps"],
+      ["exercises/barbell_row", "muscle_groups/back"],
+      ["exercises/barbell_row", "muscle_groups/biceps"],
+      ["exercises/overhead_press", "muscle_groups/shoulders"],
+      ["exercises/overhead_press", "muscle_groups/triceps"],
+      ["exercises/dumbbell_fly", "muscle_groups/chest"],
+      ["exercises/leg_press", "muscle_groups/quads"],
+      ["exercises/leg_press", "muscle_groups/glutes"],
+      ["exercises/romanian_deadlift", "muscle_groups/hamstrings"],
+      ["exercises/romanian_deadlift", "muscle_groups/glutes"],
+      ["exercises/hip_thrust", "muscle_groups/glutes"]
+    ]
+  }
+}
