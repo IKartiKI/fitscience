@@ -38,7 +38,14 @@ def vector_search(db, query: str, collections=("studies", "claims", "chunks"), t
 
 
 def format_context(hits: list[dict]) -> str:
-    return "\n".join(f"[{h['id']}] {h['text']}" for h in hits)
+    """One line per hit; graph hits also show the exact edge that connected them."""
+    lines = []
+    for h in hits:
+        rel = ""
+        if h.get("via") and h.get("edge_from"):
+            rel = f" (relationship: {h['edge_from']} --{h['via']}--> {h['edge_to']})"
+        lines.append(f"[{h['id']}]{rel} {h['text']}")
+    return "\n".join(lines)
 
 
 def answer(query: str, db=None) -> str:

@@ -8,7 +8,7 @@ from src.embeddings import embed_texts
 DATA_FILE = Path(__file__).parent.parent / "data" / "fitness_knowledge.json"
 
 # Which field of each node type is the text we embed for vector search.
-EMBED_FIELDS = {"studies": "summary", "claims": "text", "exercises": "name"}
+EMBED_FIELDS = {"studies": "summary", "claims": "text", "exercises": "name", "muscle_groups": "name"}
 
 
 def load_seed_data(db, data: dict):
@@ -24,7 +24,11 @@ def load_seed_data(db, data: dict):
         print(f"  inserted {len(docs)} into {coll_name}")
 
     for edge_coll, pairs in data["edges"].items():
-        edges = [{"_from": f, "_to": t} for f, t in pairs]
+        # Deterministic _key makes re-running ingest idempotent (no duplicate edges).
+        edges = [
+            {"_key": f"{f.split('/')[1]}__{t.split('/')[1]}", "_from": f, "_to": t}
+            for f, t in pairs
+        ]
         db.collection(edge_coll).import_bulk(edges, on_duplicate="replace")
         print(f"  inserted {len(edges)} edges into {edge_coll}")
 

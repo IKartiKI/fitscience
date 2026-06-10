@@ -3,17 +3,23 @@ from src.db import get_db
 
 # From any start node, walk up to 2 edges in any direction across our edge types,
 # returning each related node once with the edge type that connected it.
+# The WITH clause declares all vertex collections the traversal may touch —
+# required by ArangoDB when running in cluster mode.
 TRAVERSAL_AQL = """
+WITH studies, claims, exercises, muscle_groups, chunks
 FOR v, e IN 1..2 ANY @start_id supports, contradicts, cites, applies_to, targets
   RETURN DISTINCT {
     id: v._id,
     text: v.summary || v.text || v.name,
-    via: PARSE_IDENTIFIER(e._id).collection
+    via: PARSE_IDENTIFIER(e._id).collection,
+    edge_from: e._from,
+    edge_to: e._to
   }
 """
 
 # Find studies that contradict a given claim.
 CONTRADICTIONS_AQL = """
+WITH studies, claims
 FOR study IN 1..1 INBOUND @claim_id contradicts
   RETURN { id: study._id, text: study.summary, title: study.title }
 """
@@ -51,9 +57,9 @@ def resolve_entity(db, qvec: list[float], collection: str) -> str | None:
 
 
 def graph_search(db, query: str, qvec: list[float]) -> list[dict]:
-    """Resolve the query to its closest exercise or claim, then traverse from it."""
+    """Resolve the query to its closest entity, then traverse from it."""
     results = []
-    for coll in ("exercises", "claims"):
+    for coll in ("exercises", "claims", "muscle_groups"):
         start = resolve_entity(db, qvec, coll)
         if start:
             results.extend(traverse(db, start))
