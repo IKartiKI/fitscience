@@ -1,0 +1,8 @@
+langchain
+langchain-google-genai
+langgraph
+python-arango
+pymupdf
+streamlit
+python-dotenv
+pytest
