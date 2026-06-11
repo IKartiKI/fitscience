@@ -53,6 +53,13 @@ if query := st.chat_input("Ask a lifting question backed by science..."):
         meta = f"`plan: {result['retrieval_plan']}` · `contradictions: {len(result['contradictions'])}`"
         reply = f"{result['final_answer']}\n\n---\n{meta}"
         st.markdown(reply)
-        with st.expander("🕸️ Evidence graph — see how this answer was assembled"):
-            render_evidence_graph(result)
     st.session_state.messages.append({"role": "assistant", "content": reply})
+    st.session_state.last_result = result
+
+# Evidence graph for the most recent answer. Rendered outside the chat flow on
+# every rerun — a vis.js canvas inside a collapsed expander gets zero size, so a
+# toggle (which re-renders at full size when switched on) is used instead.
+if st.session_state.get("last_result"):
+    st.divider()
+    if st.toggle("🕸️ Show evidence graph for the last answer"):
+        render_evidence_graph(st.session_state.last_result)
