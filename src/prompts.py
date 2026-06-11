@@ -45,6 +45,16 @@ Return ONLY a valid JSON object (no markdown fences, no commentary) with these k
 """
 
 
+VERDICT_TEMPLATE = """You compare two scientific claims about resistance training.
+
+Claim A: {claim_a}
+Claim B: {claim_b}
+
+Do these claims contradict each other (make incompatible statements about the same thing),
+agree (support the same conclusion), or are they about unrelated topics?
+Reply with EXACTLY one word: CONTRADICT, AGREE, or UNRELATED."""
+
+
 def build_answer_prompt(query: str, context: str, contradictions: str) -> str:
     block = CONTRADICTION_BLOCK.format(contradictions=contradictions) if contradictions.strip() else ""
     return ANSWER_TEMPLATE.format(context=context, contradiction_block=block, query=query)

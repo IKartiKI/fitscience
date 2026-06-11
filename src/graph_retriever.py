@@ -41,12 +41,14 @@ def traverse(db, start_id: str) -> list[dict]:
 
 
 def find_contradictions(db, claim_ids: list[str]) -> list[dict]:
-    """Return studies connected to any of these claims via a `contradicts` edge."""
+    """Return studies connected to any of these claims via a `contradicts` edge,
+    each tagged with the claim it contradicts."""
     results = []
     for claim_id in claim_ids:
         if not claim_id.startswith("claims/"):
             continue
-        results.extend(db.aql.execute(CONTRADICTIONS_AQL, bind_vars={"claim_id": claim_id}))
+        for study in db.aql.execute(CONTRADICTIONS_AQL, bind_vars={"claim_id": claim_id}):
+            results.append({**study, "claim_id": claim_id})
     return results
 
 

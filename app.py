@@ -6,6 +6,7 @@ import streamlit as st
 
 from src.agent import ask, make_agent
 from src.ingestion_pipeline import _slugify, ingest_paper
+from src.viz import render_evidence_graph
 
 st.set_page_config(page_title="FitScience", page_icon="💪", layout="wide")
 st.title("💪 FitScience — Evidence-Based Lifting Assistant")
@@ -31,7 +32,10 @@ with st.sidebar:
                 tmp_path = tmp.name
             result = ingest_paper(tmp_path, _slugify(Path(uploaded.name).stem))
             Path(tmp_path).unlink(missing_ok=True)
-        st.success(f"Ingested **{result['title']}** — {result['claims']} claims, {result['chunks']} chunks")
+        msg = f"Ingested **{result['title']}** — {result['claims']} claims, {result['chunks']} chunks"
+        if result.get("contradictions_found"):
+            msg += f"\n\n⚠️ This paper **contradicts {result['contradictions_found']} existing claim(s)** — the graph was updated."
+        st.success(msg)
 
 # Chat history
 for msg in st.session_state.messages:
@@ -49,4 +53,6 @@ if query := st.chat_input("Ask a lifting question backed by science..."):
         meta = f"`plan: {result['retrieval_plan']}` · `contradictions: {len(result['contradictions'])}`"
         reply = f"{result['final_answer']}\n\n---\n{meta}"
         st.markdown(reply)
+        with st.expander("🕸️ Evidence graph — see how this answer was assembled"):
+            render_evidence_graph(result)
     st.session_state.messages.append({"role": "assistant", "content": reply})

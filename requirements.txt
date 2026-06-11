@@ -5,5 +5,6 @@ langgraph
 python-arango
 pymupdf
 streamlit
+streamlit-agraph
 python-dotenv
 pytest

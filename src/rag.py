@@ -8,7 +8,8 @@ from src.prompts import build_answer_prompt
 
 load_dotenv()
 
-LLM_MODEL = "gemini-2.5-flash"
+# flash-lite has a separate, larger free-tier quota than 2.5-flash (20/day).
+LLM_MODEL = "gemini-2.5-flash-lite"
 
 VECTOR_SEARCH_AQL = """
 FOR doc IN @@collection
